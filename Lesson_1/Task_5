@@ -1,0 +1,31 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+
+    // Запрашиваем у пользователя число
+    cout << "Введите высоту ёлочки: ";
+    cin >> n;
+
+    // Рисуем ёлочку
+    for (int i = 1; i <= n; ++i) {
+        // Печатаем пробелы для центрирования
+        for (int j = 0; j < n - i; ++j) {
+            cout << " ";
+        }
+        // Печатаем звезды
+        for (int k = 0; k < (2 * i - 1); ++k) {
+            cout << "*";
+        }
+        cout << endl;
+    }
+
+    // Печатаем ствол ёлочки
+    for (int i = 0; i < n - 1; ++i) {
+        cout << " ";
+    }
+    cout << "|" << endl;
+
+    return 0;
+}
