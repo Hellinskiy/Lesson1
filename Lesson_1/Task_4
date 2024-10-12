@@ -1,0 +1,32 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    // Запрашиваем зарплату
+    int salary;
+    cout << "Введите вашу зарплату: ";
+    cin >> salary;
+
+    // Признак того, что зарплата больше 1000
+    bool moreThanThousand = (salary - 1000) >> 31 == 0;  // Используем сдвиг и проверку знака
+    // Признак того, что зарплата больше миллиона
+    bool moreThanMillion = (salary - 1000000) >> 31 == 0;
+
+    // Логика на основе значений признаков
+    switch (moreThanMillion + moreThanThousand * 2) {
+        case 0:
+            cout << "Вам нужно работать больше!" << endl;
+            break;
+        case 1:
+            cout << "Вы молодец!" << endl;
+            break;
+        case 2:
+            cout << "Вы молодец!" << endl;
+            break;
+        case 3:
+            cout << "Вы миллионер!" << endl;
+            break;
+    }
+
+    return 0;
+}
