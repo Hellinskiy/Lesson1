@@ -1,0 +1,85 @@
+#include <iostream>
+#include <cmath>    // Для работы с тригонометрией
+#include <thread>   // Для задержки
+#include <cstdlib>  // Для команды очистки экрана
+
+using namespace std;
+
+// Функция для очистки экрана
+void clearScreen() {
+    #ifdef _WIN32
+        system("cls");  // Windows
+    #else
+        system("clear");  // Linux/MacOS
+    #endif
+}
+
+// Функция для рисования треугольника с вращением
+void drawRotatingTriangle(double angle) {
+    // Очистка экрана
+    clearScreen();
+
+    // Размер холста
+    const int width = 20;
+    const int height = 10;
+
+    // Центр холста
+    int centerX = width / 2;
+    int centerY = height / 2;
+
+    // Вершины треугольника (без поворота)
+    int x1 = 0, y1 = -3;  // Верхняя вершина
+    int x2 = -3, y2 = 3;  // Левая нижняя вершина
+    int x3 = 3, y3 = 3;   // Правая нижняя вершина
+
+    // Применяем вращение к каждой вершине
+    int rotatedX1 = centerX + (x1 * cos(angle) - y1 * sin(angle));
+    int rotatedY1 = centerY + (x1 * sin(angle) + y1 * cos(angle));
+
+    int rotatedX2 = centerX + (x2 * cos(angle) - y2 * sin(angle));
+    int rotatedY2 = centerY + (x2 * sin(angle) + y2 * cos(angle));
+
+    int rotatedX3 = centerX + (x3 * cos(angle) - y3 * sin(angle));
+    int rotatedY3 = centerY + (x3 * sin(angle) + y3 * cos(angle));
+
+    // Создаем холст и заполняем его пробелами
+    char canvas[height][width];
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
+            canvas[i][j] = ' ';
+        }
+    }
+
+    // Помещаем вершины треугольника на холст (обязательно проверяем, чтобы координаты не выходили за пределы холста)
+    if (rotatedY1 >= 0 && rotatedY1 < height && rotatedX1 >= 0 && rotatedX1 < width)
+        canvas[rotatedY1][rotatedX1] = '*';
+    if (rotatedY2 >= 0 && rotatedY2 < height && rotatedX2 >= 0 && rotatedX2 < width)
+        canvas[rotatedY2][rotatedX2] = '*';
+    if (rotatedY3 >= 0 && rotatedY3 < height && rotatedX3 >= 0 && rotatedX3 < width)
+        canvas[rotatedY3][rotatedX3] = '*';
+
+    // Выводим холст на экран
+    for (int i = 0; i < height; ++i) {
+        for (int j = 0; j < width; ++j) {
+            cout << canvas[i][j];
+        }
+        cout << endl;
+    }
+}
+
+int main() {
+    double angle = 0.0;
+
+    // Вращаем треугольник бесконечно
+    while (true) {
+        drawRotatingTriangle(angle);  // Рисуем треугольник с текущим углом
+
+        // Увеличиваем угол для следующего кадра
+        angle += 0.1;
+
+        // Задержка для анимации (200 миллисекунд)
+        this_thread::sleep_for(chrono::milliseconds(200));
+    }
+
+    return 0;
+}
